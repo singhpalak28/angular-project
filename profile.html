@@ -1,0 +1,125 @@
+<div class=”register-page”> 
+
+    <h1>Register Here</h1> 
+
+    <div class=”form-container”> 
+
+      <form [formGroup]=”signupForm” (ngSubmit)=”onSubmit()”> 
+
+       <input type=”text” placeholder=”Name” formControlName=”name” required> 
+
+<div *ngIf=”signupForm.get(‘name’)?.touched && signupForm.get(‘name’)?.invalid”> 
+
+  <small *ngIf=”signupForm.get(‘name’)?.hasError(‘required’)” style=”color: red;”>Name is required.</small> 
+
+  <small *ngIf=”signupForm.get(‘name’)?.hasError(‘minlength’)” style=”color: red;”>Name must be at least 3 characters.</small> 
+
+  <small *ngIf=”signupForm.get(‘name’)?.hasError(‘pattern’)” style=”color: red;”>Only alphabets and spaces allowed.</small> 
+
+</div> 
+
+        <input 
+
+  Type=”tel” 
+
+  Placeholder=”Mobile No” 
+
+  formControlName=”phone” 
+
+  maxlength=”10” 
+
+  required 
+
+  pattern=”[0-9]*” 
+
+  inputmode=”numeric” 
+
+  (keypress)=”allowOnlyDigits($event)” 
+
+> 
+
+<div *ngIf=”signupForm.get(‘phone’)?.touched && signupForm.get(‘phone’)?.invalid”> 
+
+  <small *ngIf=”signupForm.get(‘phone’)?.hasError(‘required’)” style=”color: red;”>Phone number is required.</small> 
+
+  <small *ngIf=”signupForm.get(‘phone’)?.hasError(‘pattern’)” style=”color: red;”>Enter a valid 10-digit number starting with 7, 8, or 9.</small> 
+
+</div> 
+
+ 
+
+        <input type=”email” placeholder=”Email ID” formControlName=”email” required> 
+
+        <div *ngIf=”signupForm.get(‘email’)?.touched”> 
+
+          <small *ngIf=”signupForm.get(‘email’)?.hasError(‘pattern’)” style=”color: red;”> 
+
+            Not a Valid Email 
+
+          </small> 
+
+        </div> 
+
+        <input type=”password” placeholder=”Password” formControlName=”password” required> 
+
+        <small *ngIf=”signupForm.get(‘password’)?.hasError(‘pattern’)”> 
+
+          <div [style.color]=”hasMinLength ? ‘green’ : ‘red’”>*Enter at least 8-12 characters</div> 
+
+          <div [style.color]=”hasUppercase ? ‘green’ : ‘red’”>*Should consist an uppercase</div> 
+
+          <div [style.color]=”hasAlphanumeric ? ‘green’ : ‘red’”>*Should consist alphanumeric</div> 
+
+          <div [style.color]=”hasSpecialChar ? ‘green’ : ‘red’”>*Should consist special char (!&#64;#$%^&*)</div> 
+
+        </small> 
+
+        <input type=”password” placeholder=”Confirm Password” formControlName=”confirmPassword” required> 
+
+        <small *ngIf=”hasPasswordMismatch” style=”color: red;”>Passwords do not match!</small> 
+
+        <input type=”text” placeholder=”Favourites (comma separated)” formControlName=”favorites”> 
+
+   
+
+        <div class=”captcha”>Captcha: <span>{{captcha}}</span> 
+
+          <button type=”button” (click)=”refreshCaptcha()” class=”refresh”> 
+
+            <img src=”assets/reload.png” alt=”reload”> 
+
+          </button> 
+
+        </div> 
+
+        <input type=”text” placeholder=”Enter Captcha” formControlName=”captchaInput” required> 
+
+        <small *ngIf=”hasCaptchaMismatch” style=”color: red;”>Captcha is incorrect. Please try again.</small> 
+
+        <button type=”submit”>Signup</button> 
+
+      </form> 
+
+      <p>Already existing User? <a routerLink=”/login”>Login</a></p> 
+
+    </div> 
+
+   
+
+    <!—Popup Modal à 
+
+    <div class=”popup” *ngIf=”showErrorPopup”> 
+
+      <div class=”popup-content”> 
+
+        <h2>Error</h2> 
+
+        <p>{{ errorMessage }}</p> 
+
+        <button (click)=”closePopup()”>Close</button> 
+
+      </div> 
+
+    </div> 
+
+  </div> 
